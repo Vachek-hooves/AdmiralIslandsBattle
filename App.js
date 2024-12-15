@@ -1,13 +1,24 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { AppContextProvider } from './store/context';
-import { View, StyleSheet, Platform, Image, TouchableOpacity, Text } from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {AppContextProvider} from './store/context';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  Image,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundControl from './components/userSoundControl/SoundControl';
 import {useState, useEffect} from 'react';
-import { AppState } from 'react-native';
-import { setupPlayer, playBackgroundMusic, pauseBackgroundMusic } from './components/userSoundControl/player';
+import {AppState} from 'react-native';
+import {
+  setupPlayer,
+  playBackgroundMusic,
+  pauseBackgroundMusic,
+} from './components/userSoundControl/player';
 
 import WelcomeScreen from './screen/Stack/StackWelcomeScreen';
 import {
@@ -23,7 +34,7 @@ import {
   StackQuizScreen,
   StackShipsBattle,
 } from './screen/Stack';
-import { toggleBackgroundMusic } from './components/userSoundControl/player';
+import {toggleBackgroundMusic} from './components/userSoundControl/player';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,7 +43,7 @@ const TabNavigator = () => {
   const [isSoundOn, setIsSoundOn] = useState(true);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', (nextAppState) => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
       if (nextAppState === 'active' && isSoundOn) {
         playBackgroundMusic();
       } else if (nextAppState === 'background' || nextAppState === 'inactive') {
@@ -62,7 +73,7 @@ const TabNavigator = () => {
 
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         animation: 'fade',
         animationDuration: 1000,
@@ -73,7 +84,7 @@ const TabNavigator = () => {
             style={styles.tabBarGradient}
           />
         ),
-        tabBarIcon: ({ focused }) => {
+        tabBarIcon: ({focused}) => {
           let iconSource;
 
           switch (route.name) {
@@ -99,12 +110,12 @@ const TabNavigator = () => {
               source={iconSource}
               style={[
                 styles.tabIcon,
-                { 
+                {
                   tintColor: focused ? '#4ECDC4' : '#95A5A6',
                   // For sound icon, use the sound state instead of focused
                   ...(route.name === 'Sound' && {
-                    tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6'
-                  })
+                    tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6',
+                  }),
                 },
               ]}
               resizeMode="contain"
@@ -115,51 +126,50 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: '#95A5A6',
         tabBarLabelStyle: styles.tabBarLabel,
         tabBarItemStyle: styles.tabBarItem,
-      })}
-    >
+      })}>
       <Tab.Screen
         name="TabHarborScreen"
         component={TabHarborScreen}
-        options={{ tabBarLabel: 'Harbor' }}
+        options={{tabBarLabel: 'Harbor'}}
       />
       <Tab.Screen
         name="TabQuizScreen"
         component={TabQuizScreen}
-        options={{ tabBarLabel: 'Quiz' }}
+        options={{tabBarLabel: 'Quiz'}}
       />
       <Tab.Screen
         name="TabShipsBattle"
         component={TabShipsBattle}
-        options={{ tabBarLabel: 'Battle' }}
+        options={{tabBarLabel: 'Battle'}}
       />
       <Tab.Screen
         name="TabStatistickScreen"
         component={TabStatistickScreen}
-        options={{ tabBarLabel: 'History' }}
+        options={{tabBarLabel: 'History'}}
       />
       <Tab.Screen
         name="Sound"
         component={EmptyComponent}
         options={{
           tabBarLabel: 'Sound',
-          tabBarButton: (props) => (
+          tabBarButton: props => (
             <TouchableOpacity
               {...props}
               onPress={handleSoundToggle}
-              style={styles.tabBarItem}
+              // style={styles.tabBarItemSound}
             >
               <Image
                 source={require('./assets/icons/melody.png')}
                 style={[
-                  styles.tabIcon,
-                  { tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6' }
+                  styles.tabIconSound,
+                  {tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6'},
                 ]}
-                resizeMode="contain"
               />
-              <Text style={[
-                styles.tabBarLabel,
-                { color: isSoundOn ? '#4ECDC4' : '#95A5A6' }
-              ]}>
+              <Text
+                style={[
+                  styles.tabBarLabelSound,
+                  {color: isSoundOn ? '#4ECDC4' : '#95A5A6'},
+                ]}>
                 Sound
               </Text>
             </TouchableOpacity>
@@ -181,8 +191,7 @@ function App() {
             headerShown: false,
             animation: 'fade',
             animationDuration: 1000,
-          }}
-        >
+          }}>
           <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
           <Stack.Screen name="TabNavigator" component={TabNavigator} />
           <Stack.Screen name="StackQuizScreen" component={StackQuizScreen} />
@@ -195,7 +204,10 @@ function App() {
             name="StackBattleDetail"
             component={StackBattleDetail}
           />
-          <Stack.Screen name='StackBattleScreen' component={StackBattleScreen}/>
+          <Stack.Screen
+            name="StackBattleScreen"
+            component={StackBattleScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppContextProvider>
@@ -208,7 +220,7 @@ const styles = StyleSheet.create({
     bottom: Platform.OS === 'ios' ? 24 : 4,
     left: 10,
     right: 10,
-    height: 85,
+    height: 95,
     borderRadius: 15,
     backgroundColor: 'transparent',
     elevation: 0,
@@ -221,7 +233,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     paddingBottom: 10,
-    marginHorizontal:2
+    marginHorizontal: 2,
   },
   tabBarGradient: {
     position: 'absolute',
@@ -234,18 +246,36 @@ const styles = StyleSheet.create({
   tabBarLabel: {
     fontSize: 12,
     fontWeight: '600',
-    marginTop: 5,
+    marginTop: 16,
   },
   tabBarItem: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 10,
+    // paddingTop: 10,
   },
   tabIcon: {
     width: 44,
     height: 45,
+    marginTop: 12,
+  },
+  tabIconSound: {
+    width: 44,
+    height: 45,
     // marginTop: 12,
+  },
+  tabBarLabelSound: {
+    fontSize: 12,
+    // fontWeight: '600',
+    // marginTop: 2,
+    // color: 'red',
+    textAlign: 'center',
+  },
+  tabBarItemSound: {
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // paddingTop: 10,
   },
 });
 
