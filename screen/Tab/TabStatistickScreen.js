@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     padding: 20,
-    paddingTop:'45%'
+    paddingTop:'55%'
   },
   admiralName: {
     fontSize: 24,
