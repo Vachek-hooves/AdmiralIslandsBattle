@@ -30,7 +30,7 @@ import {
 } from './screen/Tab';
 import {
   StackAdmiralScreen,
-  StackBattleDetail,
+  // StackBattleDetail,
   StackBattleScreen,
   StackQuizScreen,
   StackShipsBattle,
@@ -192,10 +192,10 @@ function App() {
             name="StackAdmiralScreen"
             component={StackAdmiralScreen}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="StackBattleDetail"
             component={StackBattleDetail}
-          />
+          /> */}
           <Stack.Screen
             name="StackBattleScreen"
             component={StackBattleScreen}

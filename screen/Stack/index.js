@@ -3,7 +3,7 @@ import StackQuizScreen from './StackQuizScreen';
 import StackShipsBattle from './StackShipsBattle';
 import StackAdmiralScreen from './StackAdmiralScreen';
 import StackBattleScreen from './StackBattleScreen';
-import StackBattleDetail from './StackBattleDetail';
+
 
 export {
   StackWelcomeScreen,
@@ -11,5 +11,5 @@ export {
   StackShipsBattle,
   StackAdmiralScreen,
   StackBattleScreen,
-  StackBattleDetail,
+
 };
