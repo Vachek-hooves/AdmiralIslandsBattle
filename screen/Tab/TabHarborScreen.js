@@ -105,7 +105,7 @@ const TabHarborScreen = () => {
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.3)']}
         style={styles.overlay}>
         <ScrollView
-          // style={styles.scrollView}
+          style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
           keyboardShouldPersistTaps="handled">
           <View style={styles.profileContainer}>
@@ -196,10 +196,12 @@ const TabHarborScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollContent: {
+  scrollView: {
     flex: 1,
-    // padding: 26,
-    // marginBottom: 30, flexGrow: 1,
+  },
+  scrollContent: {
+    padding: 16,
+    flexGrow: 1,
   },
   container: {
     flex: 1,
@@ -218,7 +220,6 @@ const styles = StyleSheet.create({
     borderColor: '#DAA520',
     width: '90%', // Added width constraint
     alignSelf: 'center', // Center the container
-    marginTop: '5%',
   },
   imageContainer: {
     width: 150, // Reduced size for better proportion
