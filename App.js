@@ -74,6 +74,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
+        tabBarHideOnKeyboard:true,
         headerShown: false,
         animation: 'fade',
         animationDuration: 1000,

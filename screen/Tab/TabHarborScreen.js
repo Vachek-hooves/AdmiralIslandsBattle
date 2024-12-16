@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  ScrollView,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -103,91 +104,104 @@ const TabHarborScreen = () => {
       <LinearGradient
         colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.3)']}
         style={styles.overlay}>
-        <View style={styles.profileContainer}>
-          <TouchableOpacity
-            style={styles.imageContainer}
-            onPress={selectImage}
-            disabled={!isEditing}>
-            {userImage ? (
-              <Image source={{uri: userImage}} style={styles.profileImage} />
-            ) : (
-              <View style={styles.placeholderImage}>
-                <Text style={styles.placeholderText}>Add Photo</Text>
-              </View>
-            )}
-            {isEditing && (
-              <View style={styles.editOverlay}>
-                <Text style={styles.editText}>Change Photo</Text>
-              </View>
-            )}
-          </TouchableOpacity>
+        <ScrollView
+          // style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled">
+          <View style={styles.profileContainer}>
+            <TouchableOpacity
+              style={styles.imageContainer}
+              onPress={selectImage}
+              disabled={!isEditing}>
+              {userImage ? (
+                <Image source={{uri: userImage}} style={styles.profileImage} />
+              ) : (
+                <View style={styles.placeholderImage}>
+                  <Text style={styles.placeholderText}>Add Photo</Text>
+                </View>
+              )}
+              {isEditing && (
+                <View style={styles.editOverlay}>
+                  <Text style={styles.editText}>Change Photo</Text>
+                </View>
+              )}
+            </TouchableOpacity>
 
-          <View style={styles.infoContainer}>
-            {isEditing ? (
-              <TextInput
-                style={styles.nameInput}
-                value={userName}
-                onChangeText={setUserName}
-                placeholder="Enter your name"
-                placeholderTextColor="#666"
-              />
-            ) : (
-              <Text style={styles.userName}>
-                {userName || 'Anonymous Admiral'}
-              </Text>
-            )}
-          </View>
+            <View style={styles.infoContainer}>
+              {isEditing ? (
+                <TextInput
+                  style={styles.nameInput}
+                  value={userName}
+                  onChangeText={setUserName}
+                  placeholder="Enter your name"
+                  placeholderTextColor="#666"
+                />
+              ) : (
+                <Text style={styles.userName}>
+                  {userName || 'Anonymous Admiral'}
+                </Text>
+              )}
+            </View>
 
-          <View style={styles.buttonContainer}>
-            {isEditing ? (
-              <>
-                <TouchableOpacity style={styles.button} onPress={saveUserData}>
-                  <LinearGradient
-                    colors={['#4a4a4a', '#2a2a2a']}
-                    style={styles.buttonGradient}>
-                    <Text style={styles.buttonText}>Save</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => setIsEditing(false)}>
-                  <LinearGradient
-                    colors={['#4a4a4a', '#2a2a2a']}
-                    style={styles.buttonGradient}>
-                    <Text style={styles.buttonText}>Cancel</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => setIsEditing(true)}>
-                  <LinearGradient
-                    colors={['#4a4a4a', '#2a2a2a']}
-                    style={styles.buttonGradient}>
-                    <Text style={styles.buttonText}>Edit Profile</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.deleteButton]}
-                  onPress={deleteProfile}>
-                  <LinearGradient
-                    colors={['#8B0000', '#4a0000']}
-                    style={styles.buttonGradient}>
-                    <Text style={styles.buttonText}>Delete Profile</Text>
-                  </LinearGradient>
-                </TouchableOpacity>
-              </>
-            )}
+            <View style={styles.buttonContainer}>
+              {isEditing ? (
+                <>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={saveUserData}>
+                    <LinearGradient
+                      colors={['#4a4a4a', '#2a2a2a']}
+                      style={styles.buttonGradient}>
+                      <Text style={styles.buttonText}>Save</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setIsEditing(false)}>
+                    <LinearGradient
+                      colors={['#4a4a4a', '#2a2a2a']}
+                      style={styles.buttonGradient}>
+                      <Text style={styles.buttonText}>Cancel</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => setIsEditing(true)}>
+                    <LinearGradient
+                      colors={['#4a4a4a', '#2a2a2a']}
+                      style={styles.buttonGradient}>
+                      <Text style={styles.buttonText}>Edit Profile</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.button, styles.deleteButton]}
+                    onPress={deleteProfile}>
+                    <LinearGradient
+                      colors={['#8B0000', '#4a0000']}
+                      style={styles.buttonGradient}>
+                      <Text style={styles.buttonText}>Delete Profile</Text>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </>
+              )}
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </LinearGradient>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContent: {
+    flex: 1,
+    // padding: 26,
+    // marginBottom: 30, flexGrow: 1,
+   
+  },
   container: {
     flex: 1,
   },
@@ -195,7 +209,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     // padding: 20,
-    
   },
   profileContainer: {
     alignItems: 'center',
