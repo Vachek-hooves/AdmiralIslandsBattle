@@ -117,12 +117,12 @@ const TabHarborScreen = () => {
                 <Image source={{uri: userImage}} style={styles.profileImage} />
               ) : (
                 <View style={styles.placeholderImage}>
-                  <Text style={styles.placeholderText}>Add Photo</Text>
+                  {/* <Text style={styles.placeholderText}>Add Photo</Text> */}
                 </View>
               )}
               {isEditing && (
                 <View style={styles.editOverlay}>
-                  <Text style={styles.editText}>Change Photo</Text>
+                  <Text style={styles.editText}>Choose Image</Text>
                 </View>
               )}
             </TouchableOpacity>

@@ -4,14 +4,16 @@ let backgroundMusic = null;
 let isPlaying = false;
 
 export const setupPlayer = () => {
-  if (backgroundMusic) return; // Prevent multiple initializations
+  if (backgroundMusic) return Promise.resolve(); // Prevent multiple initializations
 
-  Sound.setCategory('Playback');
-  
   return new Promise((resolve, reject) => {
+    Sound.setCategory('Playback', true);
+    Sound.setMode('SpokenAudio');
+    Sound.setActive(true);
+
     backgroundMusic = new Sound(
-      require('../../assets/sound/bgSound/shipsBattle.mp3'), 
-      (error) => {
+      require('../../assets/sound/bgSound/shipsBattle.mp3'),
+      error => {
         if (error) {
           console.error('Failed to load sound', error);
           reject(error);
@@ -20,52 +22,46 @@ export const setupPlayer = () => {
         backgroundMusic.setNumberOfLoops(-1);
         backgroundMusic.setVolume(0.5);
         resolve();
-      }
+      },
     );
   });
 };
 
-export const playBackgroundMusic = async () => {
-  if (!backgroundMusic) {
-    await setupPlayer();
-  }
-  
-  if (!isPlaying && backgroundMusic) {
-    backgroundMusic.play((success) => {
-      if (!success) {
-        console.log('Playback failed due to audio decoding errors');
-      }
-    });
-    isPlaying = true;
-  }
-};
-
-export const pauseBackgroundMusic = () => {
-  if (backgroundMusic && isPlaying) {
-    backgroundMusic.pause();
-    isPlaying = false;
-  }
-};
 
 export const toggleBackgroundMusic = () => {
   if (!backgroundMusic) {
-    setupPlayer();
-    return true;
+    return false;
   }
 
   if (isPlaying) {
-    pauseBackgroundMusic();
+    backgroundMusic.pause();
+    isPlaying = false;
     return false;
   } else {
-    playBackgroundMusic();
+    backgroundMusic.play();
+    isPlaying = true;
     return true;
   }
 };
 
+export const playBackgroundMusic = () => {
+  if (!backgroundMusic) {
+    return false;
+  }
+
+  backgroundMusic.play();
+  isPlaying = true;
+  return true;
+};
+
+export const getPlayingState = () => isPlaying;
+
 export const cleanupPlayer = () => {
   if (backgroundMusic) {
+    backgroundMusic.stop();
     backgroundMusic.release();
     backgroundMusic = null;
     isPlaying = false;
   }
 };
+

@@ -18,6 +18,7 @@ import {
   setupPlayer,
   playBackgroundMusic,
   pauseBackgroundMusic,
+  cleanupPlayer,
 } from './components/userSoundControl/player';
 
 import WelcomeScreen from './screen/Stack/StackWelcomeScreen';
@@ -43,26 +44,16 @@ const TabNavigator = () => {
   const [isSoundOn, setIsSoundOn] = useState(true);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (nextAppState === 'active' && isSoundOn) {
-        playBackgroundMusic();
-      } else if (nextAppState === 'background' || nextAppState === 'inactive') {
-        pauseBackgroundMusic();
-      }
-    });
-
-    // Initialize sound when app starts
     const initSound = async () => {
       await setupPlayer();
-      await playBackgroundMusic();
+      playBackgroundMusic();
       setIsSoundOn(true);
     };
 
     initSound();
 
     return () => {
-      subscription.remove();
-      pauseBackgroundMusic();
+      cleanupPlayer();
     };
   }, []);
 
