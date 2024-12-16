@@ -6,7 +6,7 @@ import { shipQuizData } from '../../data/shipQuiz';
 import { fleet } from '../../data/fleet';
 
 const { width } = Dimensions.get('window');
-const imageHeight = width * 1.4;
+const imageHeight = width * 1.65;
 
 export default function StackAdmiralScreen() {
   const route = useRoute();

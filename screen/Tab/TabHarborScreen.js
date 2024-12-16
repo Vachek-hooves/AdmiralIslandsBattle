@@ -200,7 +200,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // padding: 26,
     // marginBottom: 30, flexGrow: 1,
-   
   },
   container: {
     flex: 1,
@@ -219,6 +218,7 @@ const styles = StyleSheet.create({
     borderColor: '#DAA520',
     width: '90%', // Added width constraint
     alignSelf: 'center', // Center the container
+    marginTop: '5%',
   },
   imageContainer: {
     width: 150, // Reduced size for better proportion
