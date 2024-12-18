@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  Dimensions
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundControl from './components/userSoundControl/SoundControl';
@@ -174,6 +175,9 @@ const TabNavigator = () => {
 
 const EmptyComponent = () => null;
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const isSmall=SCREEN_WIDTH < 420;
+
 function App() {
   return (
     <AppContextProvider>
@@ -256,6 +260,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 45,
     // marginTop: 12,
+    marginTop: isSmall ? 0 : 12,
   },
   tabBarLabelSound: {
     fontSize: 12,
@@ -263,7 +268,8 @@ const styles = StyleSheet.create({
     // marginTop: 12,
     // color: 'red',
     // textAlign: 'center',
-    padding: 5
+    padding: 5,
+    marginTop: isSmall ? 0 : 12,
   },
   tabBarItemSound: {
     // flex: 1,

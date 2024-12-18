@@ -75,7 +75,7 @@ const WelcomeScreen = ({ navigation }) => {
             }}
           >
             <Text style={styles.titleText}>Admiral's</Text>
-            <Text style={styles.titleText}>Battle Islands</Text>
+            <Text style={styles.titleText}>Islands Battle </Text>
           </Animated.View>
         </View>
       </LinearGradient>
