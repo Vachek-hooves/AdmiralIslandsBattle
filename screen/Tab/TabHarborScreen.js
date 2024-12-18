@@ -190,6 +190,7 @@ const TabHarborScreen = () => {
             </View>
           </View>
         </ScrollView>
+        <View style={{height: 100}}/>
       </LinearGradient>
     </ImageBackground>
   );
