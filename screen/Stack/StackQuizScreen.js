@@ -139,28 +139,33 @@ const StackQuizScreen = ({ route, navigation }) => {
         colors={['rgba(0,0,0,0.7)', 'rgba(0,0,0,0.85)']}
         style={styles.overlay}
       >
-        <ScrollView contentContainerStyle={styles.container}>
-          <View style={styles.questionContainer}>
-            <Text style={styles.questionNumber}>
-              Question {currentQuestionIndex + 1}/{quizLevel.questions.length}
-            </Text>
-            <Text style={styles.questionText}>{currentQuestion.question}</Text>
+        <ScrollView 
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.container}>
+            <View style={styles.questionContainer}>
+              <Text style={styles.questionNumber}>
+                Question {currentQuestionIndex + 1}/{quizLevel.questions.length}
+              </Text>
+              <Text style={styles.questionText}>{currentQuestion.question}</Text>
+            </View>
+            
+            {currentQuestion.options.map((option, index) => (
+              <OptionButton
+                key={`${currentQuestionIndex}-${index}`}
+                option={option}
+                onPress={() => handleAnswer(option)}
+                selected={selectedAnswer === option}
+                correct={isCorrect !== null && option === currentQuestion.correctAnswer}
+                disabled={selectedAnswer !== null}
+                index={index}
+              />
+            ))}
           </View>
-          
-          {currentQuestion.options.map((option, index) => (
-            <OptionButton
-              key={`${currentQuestionIndex}-${index}`}
-              option={option}
-              onPress={() => handleAnswer(option)}
-              selected={selectedAnswer === option}
-              correct={isCorrect !== null && option === currentQuestion.correctAnswer}
-              disabled={selectedAnswer !== null}
-              index={index}
-            />
-          ))}
         </ScrollView>
-        <BackIcon />
       </LinearGradient>
+        {/* <BackIcon /> */}
     </ImageBackground>
   );
 };
@@ -179,14 +184,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    minHeight: '100%',
   },
   questionContainer: {
     width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     borderRadius: 15,
     padding: 20,
+    marginTop: 20,
     marginBottom: 30,
     borderWidth: 2,
     borderColor: '#DAA520',
@@ -262,6 +269,10 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     gap: 15,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
 });
 

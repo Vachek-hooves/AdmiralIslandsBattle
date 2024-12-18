@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     marginTop: 16,
+    padding: 5
   },
   tabBarItem: {
     flex: 1,
@@ -259,14 +260,15 @@ const styles = StyleSheet.create({
   tabBarLabelSound: {
     fontSize: 12,
     // fontWeight: '600',
-    // marginTop: 2,
+    // marginTop: 12,
     // color: 'red',
-    textAlign: 'center',
+    // textAlign: 'center',
+    padding: 5
   },
   tabBarItemSound: {
     // flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
     // paddingTop: 10,
   },
 });

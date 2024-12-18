@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, TouchableOpacity, Text, Alert } from 'react-native';
+import { StyleSheet, View, ImageBackground, TouchableOpacity, Text, Alert, ScrollView ,Dimensions} from 'react-native';
 import { useAppContextProvider } from '../../store/context';
+
+const { height } = Dimensions.get('window');
 
 const LevelMarker = ({ number, isActive, top, left }) => (
   <View style={[
@@ -70,40 +72,47 @@ const TabQuizScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground 
-      source={require('../../assets/image/bg/map.png')} 
-      style={styles.image}
-    >
-      <TotalScoreDisplay score={totalScore} />
-      {levels.map((level) => {
-        const quizLevel = quizData.find(quiz => quiz.id === level.number);
-        const isActive = quizLevel ? quizLevel.isActive : false;
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ImageBackground 
+        source={require('../../assets/image/bg/map.png')} 
+        style={styles.image}
+        resizeMode="cover"
+      >
+        <TotalScoreDisplay score={totalScore} />
 
-        return (
-          <TouchableOpacity
-            key={level.number}
-            style={[styles.levelArea, { top: level.top, left: level.left }]}
-            onPress={() => handleLevelPress(level.number)}
-          >
-            <LevelMarker 
-              number={level.number} 
-              isActive={isActive}
-              top={0} 
-              left={0} 
-            />
-          </TouchableOpacity>
-        );
-      })}
-    </ImageBackground>
+        {levels.map((level) => {
+          const quizLevel = quizData.find(quiz => quiz.id === level.number);
+          const isActive = quizLevel ? quizLevel.isActive : false;
+          
+          return (
+            <TouchableOpacity
+              key={level.number}
+              style={[styles.levelArea, { top: level.top, left: level.left }]}
+              onPress={() => handleLevelPress(level.number)}
+            >
+              <LevelMarker 
+                number={level.number} 
+                isActive={isActive}
+                top={0} 
+                left={0} 
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </ImageBackground>
+    </ScrollView>
   );
 };
 
 export default TabQuizScreen;
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   image: {
-    flex: 1,
-    resizeMode: 'cover',
+    width: '100%',
+    height: height*1,
   },
   levelArea: {
     position: 'absolute',
@@ -141,7 +150,7 @@ const styles = StyleSheet.create({
     // right: 0,
     // alignItems: 'center',
     zIndex: 1,
-    marginTop: '12%',
+    marginTop: 10,
     borderRadius: 15,
     overflow: 'hidden',
     marginHorizontal: '30%',
