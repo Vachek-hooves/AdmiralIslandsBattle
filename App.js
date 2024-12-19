@@ -176,7 +176,7 @@ const TabNavigator = () => {
 const EmptyComponent = () => null;
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isSmall=SCREEN_WIDTH < 420;
+const isSmall=SCREEN_WIDTH < 421;
 
 function App() {
   return (
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 45,
     // marginTop: 12,
-    marginTop: isSmall ? 0 : 12,
+    marginTop: isSmall ? 0 : 15,
   },
   tabBarLabelSound: {
     fontSize: 12,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     // color: 'red',
     // textAlign: 'center',
     padding: 5,
-    marginTop: isSmall ? 0 : 12,
+    marginTop: isSmall ? 0 : 15,
   },
   tabBarItemSound: {
     // flex: 1,

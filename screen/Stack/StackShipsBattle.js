@@ -80,6 +80,45 @@ const StackShipsBattle = () => {
   }, [totalScore, score, updateTotalScore, gameOver]);
 
   useEffect(() => {
+    try {
+      // Show orientation alert
+      Alert.alert(
+        'Screen Orientation',
+        'This game is designed to be played in portrait mode only. Please hold your device vertically.',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              // Force portrait orientation after user acknowledges
+              if (Orientation) {
+                Orientation.lockToPortrait();
+              }
+              
+              // Add a small delay to ensure orientation change is complete
+              setTimeout(() => {
+                // Your existing game initialization code here
+              }, 100);
+            },
+          },
+        ],
+      );
+    } catch (error) {
+      console.warn('Failed to lock orientation:', error);
+    }
+
+    return () => {
+      try {
+        // Release the orientation lock when component unmounts
+        if (Orientation) {
+          Orientation.unlockAllOrientations();
+        }
+      } catch (error) {
+        console.warn('Failed to unlock orientation:', error);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     // Load the sound files
     Sound.setCategory('Playback');
     shotSoundEffect.current = new Sound(
