@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SoundControl from './components/userSoundControl/SoundControl';
@@ -37,12 +37,36 @@ import {
   StackShipsBattle,
 } from './screen/Stack';
 import {toggleBackgroundMusic} from './components/userSoundControl/player';
+console.log(Dimensions.get('window').width)
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
   const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isHorizontal, setIsHorizontal] = useState(false);
+  const [isSmall, setIsSmall] = useState(Dimensions.get('window').width < 421);
+  console.log(isSmall)
+
+  useEffect(() => {
+    const updateLayout = () => {
+      const { width } = Dimensions.get('window');
+      setIsHorizontal(width > Dimensions.get('window').height);
+      setIsSmall(width < 421);
+    };
+
+    // Set initial layout
+    updateLayout();
+
+    // Add event listener for orientation/dimension changes
+    Dimensions.addEventListener('change', updateLayout);
+
+    // Cleanup
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    };
+  }, []);
 
   useEffect(() => {
     const initSound = async () => {
@@ -62,6 +86,8 @@ const TabNavigator = () => {
     const newState = toggleBackgroundMusic();
     setIsSoundOn(newState);
   };
+
+
 
   return (
     <Tab.Navigator
@@ -156,13 +182,16 @@ const TabNavigator = () => {
                 style={[
                   styles.tabIconSound,
                   {tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6'},
+                  {marginTop: isSmall ? 0 : 15, }
                 ]}
               />
               <Text
                 style={[
                   styles.tabBarLabelSound,
                   {color: isSoundOn ? '#4ECDC4' : '#95A5A6'},
+                  {marginTop: isSmall ? 0 : 15, }
                 ]}>
+                  
                 Sound
               </Text>
             </TouchableOpacity>
@@ -174,9 +203,6 @@ const TabNavigator = () => {
 };
 
 const EmptyComponent = () => null;
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const isSmall=SCREEN_WIDTH < 421;
 
 function App() {
   return (
@@ -259,17 +285,12 @@ const styles = StyleSheet.create({
   tabIconSound: {
     width: 44,
     height: 45,
-    // marginTop: 12,
-    marginTop: isSmall ? 0 : 15,
+    // marginTop: isSmall ? 0 : 15,
   },
   tabBarLabelSound: {
     fontSize: 12,
-    // fontWeight: '600',
-    // marginTop: 12,
-    // color: 'red',
-    // textAlign: 'center',
     padding: 5,
-    marginTop: isSmall ? 0 : 15,
+    // marginTop: isSmall ? 0 : 15,
   },
   tabBarItemSound: {
     // flex: 1,
