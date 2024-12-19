@@ -16,7 +16,7 @@ import Sound from 'react-native-sound';
 import {useAppContextProvider} from '../../store/context';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import Orientation from 'react-native-orientation-locker';
 // Enable playback in silence mode
 Sound.setCategory('Playback');
 
@@ -36,6 +36,9 @@ const StackShipsBattle = () => {
   const [shootCount, setShootCount] = useState(3);
   const [useGameScore, setUseGameScore] = useState(false);
   const [finalTotalScore, setFinalTotalScore] = useState(totalScore);
+  const [bullets, setBullets] = useState([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const playerShipPosition = useRef(
     new Animated.ValueXY({
       x: SCREEN_WIDTH / 2 - SHIP_SIZE / 2,
@@ -43,6 +46,7 @@ const StackShipsBattle = () => {
       y: SCREEN_HEIGHT * 0.73, // This will position it at 80% of screen height
     }),
   ).current;
+
   const [enemyShips, setEnemyShips] = useState(
     Array(INITIAL_ENEMY_COUNT)
       .fill()
@@ -57,10 +61,10 @@ const StackShipsBattle = () => {
         image: enemyShip,
       })),
   );
-  const [bullets, setBullets] = useState([]);
+  
   const shotSoundEffect = useRef(null);
   const explosionSoundEffect = useRef(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
 
   const updateScore = useCallback(points => {
     setScore(prevScore => prevScore + points);
