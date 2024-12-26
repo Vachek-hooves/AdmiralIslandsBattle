@@ -44,10 +44,10 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
-  const [isSoundOn, setIsSoundOn] = useState(true);
+  // const [isSoundOn, setIsSoundOn] = useState(true);
   const [isHorizontal, setIsHorizontal] = useState(false);
   const [isSmall, setIsSmall] = useState(Dimensions.get('window').width < 421);
-  console.log(isSmall)
+  // console.log(isSmall)
 
   useEffect(() => {
     const updateLayout = () => {
@@ -68,24 +68,24 @@ const TabNavigator = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const initSound = async () => {
-      await setupPlayer();
-      playBackgroundMusic();
-      setIsSoundOn(true);
-    };
+  // useEffect(() => {
+  //   const initSound = async () => {
+  //     await setupPlayer();
+  //     playBackgroundMusic();
+  //     setIsSoundOn(true);
+  //   };
 
-    initSound();
+  //   initSound();
 
-    return () => {
-      cleanupPlayer();
-    };
-  }, []);
+  //   return () => {
+  //     cleanupPlayer();
+  //   };
+  // }, []);
 
-  const handleSoundToggle = () => {
-    const newState = toggleBackgroundMusic();
-    setIsSoundOn(newState);
-  };
+  // const handleSoundToggle = () => {
+  //   const newState = toggleBackgroundMusic();
+  //   setIsSoundOn(newState);
+  // };
 
 
 
@@ -166,43 +166,12 @@ const TabNavigator = () => {
         component={TabStatistickScreen}
         options={{tabBarLabel: 'History'}}
       />
-      <Tab.Screen
-        name="Sound"
-        component={EmptyComponent}
-        options={{
-          tabBarLabel: 'Sound',
-          tabBarButton: props => (
-            <TouchableOpacity
-              {...props}
-              onPress={handleSoundToggle}
-              // style={styles.tabBarItemSound}
-            >
-              <Image
-                source={require('./assets/icons/melody.png')}
-                style={[
-                  styles.tabIconSound,
-                  {tintColor: isSoundOn ? '#4ECDC4' : '#95A5A6'},
-                  {marginTop: isSmall ? 0 : 15, }
-                ]}
-              />
-              <Text
-                style={[
-                  styles.tabBarLabelSound,
-                  {color: isSoundOn ? '#4ECDC4' : '#95A5A6'},
-                  {marginTop: isSmall ? 0 : 15, }
-                ]}>
-                  
-                Sound
-              </Text>
-            </TouchableOpacity>
-          ),
-        }}
-      />
+     
     </Tab.Navigator>
   );
 };
 
-const EmptyComponent = () => null;
+// const EmptyComponent = () => null;
 
 function App() {
   return (
